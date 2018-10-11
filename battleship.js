@@ -59,7 +59,7 @@ generateShipLocations: function() {
   },
 
 generateShip: function() {
-  var direction = Math.floor(Math.random() + 2);
+  var direction = Math.floor(Math.random() * 2);
   var row, col;
 
   if (direction === 1) {
@@ -117,8 +117,6 @@ var controller = {
       var hit = model.fire(location);
       if (hit && model.shipsSunk === model.numShips) {
         view.displayMessage("You sank all the battleships in " + this.guesses + "guesses!");
-
-
       }
     }
   }
@@ -137,7 +135,7 @@ function parseGuess(guess) {
     if (isNaN(row) || isNaN(column)) {
       alert("Not a valid input");
     } else if (row < 0 || row >= model.boardSize || column < 0 || column >= model.boardSize) {
-      alert("Input is not located on thie board!");
+      alert("Input is not located on the board!");
     } else {
       return row + column;
     }
@@ -148,7 +146,7 @@ function parseGuess(guess) {
 
 function handleFireButton() {
   var guessInput = document.getElementById("guessInput");
-  var guess = guessInput.value.toUpperCare();
+  var guess = guessInput.value.toUpperCase();
 
   controller.processGuess(guess);
 
@@ -157,18 +155,21 @@ function handleFireButton() {
 };
 
 function handleKeyPress(e) {
+  console.log(" in handle key");
   var fireButton = document.getElementById("fireButton");
   e=e || window.event;
+
 
   if (e.keyCode === 13) {
     fireButton.click();
     return false;
   }
+ handleFireButton(); 
 };
 
 function init() {
   var fireButton = document.getElementById("fireButton");
-  fireButton.onClick = handleKeyPress;
+  fireButton.onclick = handleKeyPress;
 
   model.generateShipLocations();
 };
